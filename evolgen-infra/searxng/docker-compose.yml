@@ -21,3 +21,32 @@ networks:
   lan:
     external: true
     name: LAN
+
+
+
+
+
+
+
+
+
+
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "10"
+        max-size: "2m"
+
+networks:
+  LAN:
+    external:
+      true
+
+volumes:
+  ShinobiSQL:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=192.168.1.247,rw,nolock,noatime,vers=4
+      device: ":/volume1/Network Drive/docker_config/shinobi/ShinobiSQL"
+    

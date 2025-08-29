@@ -1,0 +1,2 @@
+create a setup where the flow will act like unit tests for docker files/compose
+could also delegate the structuring of all of the docker files

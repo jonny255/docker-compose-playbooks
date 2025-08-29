@@ -1,21 +1,19 @@
+# URL: https://gitlab.com/Shinobi-Systems/ShinobiDocker
+
 services:
-  olla:
-    image: ghcr.io/thushan/olla:latest
-    container_name: olla
-#    env_file:
-#      - .env
-    ports:
-      - "40114:40114"   # more for personal reference than it being needed since it has its own dedicated IP.
+  shinobi-sql:
+    image: mysql:5.7
+    env_file:
+      - .env
+    volumes:
+      - ShinobiSQL:/var/lib/mysql
+      - mysql-init:/docker-entrypoint-initdb.d
     restart: unless-stopped
     networks:
       LAN:
-        ipv4_address: 192.168.1.49
-    environment:
-        - CONFIG=config.yaml
-    # guarantee logs are visible
+        ipv4_address: 192.168.1.555
     tty: true
     stdin_open: true
-
 
 
 
@@ -39,3 +37,9 @@ volumes:
       o: addr=192.168.1.247,rw,nolock,noatime,vers=4
       device: ":/volume1/Network Drive/docker_config/shinobi/ShinobiSQL"
     
+  mysql-init:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=192.168.1.247,rw,nolock,noatime,vers=4
+      device: ":/volume1/Network Drive/docker_config/shinobi/mysql-init"
