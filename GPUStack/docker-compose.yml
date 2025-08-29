@@ -1,0 +1,22 @@
+services:
+  gpustack:
+    image: gpustack/gpustack
+    container_name: gpustack
+    volumes:
+      - gpustack:/var/lib/gpustack
+    restart: unless-stopped
+    networks:
+      LAN:
+        ipv4_address: 192.168.1.43
+
+networks:
+  LAN:
+    external: true
+
+volumes:
+  gpustack:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=192.168.1.247,rw,nolock,vers=4
+      device: ":/volume1/Network Drive/docker_config/gpustack"

@@ -1,0 +1,115 @@
+# Refer to https://thushan.github.io/olla/concepts/load-balancing/ for available options and best strategies.
+
+# Configuration Structure:
+    # server:         # HTTP server configuration
+    # proxy:          # Proxy engine settings
+    # discovery:      # Endpoint discovery
+    # model_registry: # Model management
+    # logging:        # Logging configuration
+    # engineering:    # Debug features
+
+server:
+  host: "0.0.0.0"
+  port: 40114
+  read_timeout: 20s
+  write_timeout: 0s  # Keep at 0s for streaming      Must be 0s to support LLM streaming
+  shutdown_timeout: 10s  # Time to wait for active connections during shutdown
+  # idle_timeout: 120s  # Optional: connection idle timeout (default: no timeout)
+  request_logging: true # Enable detailed HTTP request/response logging
+
+proxy:
+  engine: "olla"  # or "olla" for high-performance or "sherpa" for the default
+  load_balancer: "least-connections"  # priority, round-robin, or least-connections
+
+  # Initial connection timeout     # Timeout for establishing connections
+  connection_timeout: 10s
+
+  # Request/response timeout
+  response_timeout: 600s      # Timeout for complete response (10 minutes)
+
+  # Idle connection timeout
+  idle_timeout: 90s
+
+  read_timeout: 120s         # Timeout for reading response chunks
+  stream_buffer_size: 8192   # Buffer size for streaming responses (8KB)
+
+  # Health check specific
+  health_check_timeout: 5s
+
+
+  # Auto profile adapts based on:
+  # - Response size
+  # - Streaming detection
+  # - Content type
+  profile: "auto"  # auto, streaming, or standard
+
+  health:
+  check_interval: 10s    # Balance between speed and load
+  check_timeout: 5s      # Allow for model loading
+  unhealthy_threshold: 3 # Avoid flapping
+
+discovery:
+  model_discovery:
+    enabled: true
+    interval: 30s         # How often to refresh models
+    timeout: 30s         # Discovery request timeout
+    concurrent_workers: 1 # Parallel discovery workers
+  type: "static"
+  static:
+    endpoints:
+      # High priority endpoint
+      - url: "http://192.168.1.133:11434"
+        name: "GPGPU-03"
+        type: "ollama"
+        priority: 100
+        health_check_url: "/"  # Optional, defaults to provider-specific path
+        model_url: "/api/tags"
+        check_interval: 10s           # How often to check
+        check_timeout: 2s            # Timeout per check
+
+      # Medium priority endpoint
+      - url: "http://192.168.1.111:11434"
+        name: "GPGPU-02"
+        type: "ollama"
+        priority: 90
+        health_check_url: "/"  # Optional, defaults to provider-specific path
+        model_url: "/api/tags"
+        check_interval: 10s           # How often to check
+        check_timeout: 2s            # Timeout per check
+
+      # Low priority endpoint
+      - url: "http://192.168.1.131:11434"
+        name: "ollama-CPU"
+        type: "ollama"
+        priority: 50
+        health_check_url: "/"  # Optional, defaults to provider-specific path
+        model_url: "/api/tags"
+        check_interval: 10s           # How often to check
+        check_timeout: 2s            # Timeout per check
+
+
+
+model_registry:
+  type: "memory"
+  enable_unifier: true
+  routing_strategy:
+    type: "optimistic"              # strict, optimistic, or discovery
+    options:
+      fallback_behavior: "all"  # compatible_only, all, or none
+      discovery_timeout: 2s
+      discovery_refresh_on_miss: false
+  unification:
+    enabled: true
+    stale_threshold: 24h   # Model retention time
+    cleanup_interval: 10m  # Cleanup frequency
+
+
+
+
+logging:
+  level: "debug"
+  format: "json"
+  output: "stdout" # stdout or file
+
+engineering:
+  show_nerdstats: true

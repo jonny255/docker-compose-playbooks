@@ -1,0 +1,23 @@
+services:
+  searxng:
+    image: searxng/searxng:latest
+    container_name: searxng
+    restart: unless-stopped
+    environment:
+      - SEARXNG_SECRET_KEY=changeme
+      - SEARXNG_SECRET=ultrasecretkey
+      - SEARXNG_BASE_URL=http://192.168.1.141:8080
+      - SEARXNG_BIND_ADDRESS=0.0.0.0:8080
+      - SEARXNG_BOT_DETECTION_ENABLED=false
+      - TZ=America/Chicago
+    volumes:
+      - ./settings.yml:/etc/searxng/settings.yml:ro
+    networks:
+      lan:
+        ipv4_address: 192.168.1.141
+    dns:
+      - 192.168.1.240
+networks:
+  lan:
+    external: true
+    name: LAN
