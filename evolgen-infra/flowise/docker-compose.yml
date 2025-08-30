@@ -1,55 +1,15 @@
 
 
-version: '3.1'
-
 services:
     flowise:
         image: flowiseai/flowise:latest
-        restart: always
-        environment:
-            - PORT=${PORT}
-
-            # DATABASE
-            # SECRET KEYS
+        restart: unless-stopped
+        env_file:
+          - .env
 #            # LOGGING
 #            - DEBUG=${DEBUG}
 #            - LOG_PATH=${LOG_PATH}
 #            - LOG_LEVEL=${LOG_LEVEL}
-
-            # CUSTOM TOOL DEPENDENCIES
-            - TOOL_FUNCTION_BUILTIN_DEP=${TOOL_FUNCTION_BUILTIN_DEP}
-            - TOOL_FUNCTION_EXTERNAL_DEP=${TOOL_FUNCTION_EXTERNAL_DEP}
-
-            # STORAGE
-            # SETTINGS
-            # AUTH PARAMETERS
-            - APP_URL=${APP_URL}
-            - JWT_AUTH_TOKEN_SECRET=${JWT_AUTH_TOKEN_SECRET}
-            - JWT_REFRESH_TOKEN_SECRET=${JWT_REFRESH_TOKEN_SECRET}
-            - JWT_ISSUER=${JWT_ISSUER}
-            - JWT_AUDIENCE=${JWT_AUDIENCE}
-            - JWT_TOKEN_EXPIRY_IN_MINUTES=${JWT_TOKEN_EXPIRY_IN_MINUTES}
-            - JWT_REFRESH_TOKEN_EXPIRY_IN_MINUTES=${JWT_REFRESH_TOKEN_EXPIRY_IN_MINUTES}
-            - EXPIRE_AUTH_TOKENS_ON_RESTART=${EXPIRE_AUTH_TOKENS_ON_RESTART}
-            - EXPRESS_SESSION_SECRET=${EXPRESS_SESSION_SECRET}
-            - PASSWORD_RESET_TOKEN_EXPIRY_IN_MINS=${PASSWORD_RESET_TOKEN_EXPIRY_IN_MINS}
-            - PASSWORD_SALT_HASH_ROUNDS=${PASSWORD_SALT_HASH_ROUNDS}
-            - TOKEN_HASH_SECRET=${TOKEN_HASH_SECRET}
-
-            # EMAIL
-            - SMTP_HOST=${SMTP_HOST}
-            - SMTP_PORT=${SMTP_PORT}
-            - SMTP_USER=${SMTP_USER}
-            - SMTP_PASSWORD=${SMTP_PASSWORD}
-            - SMTP_SECURE=${SMTP_SECURE}
-            - ALLOW_UNAUTHORIZED_CERTS=${ALLOW_UNAUTHORIZED_CERTS}
-            - SENDER_EMAIL=${SENDER_EMAIL}
-
-            # ENTERPRISE
-            # METRICS COLLECTION
-            # PROXY
-            # QUEUE CONFIGURATION
-
         ports:
             - '${PORT}:${PORT}'
         healthcheck:
@@ -59,29 +19,17 @@ services:
             retries: 5
             start_period: 30s
         volumes:
-            - ~/.flowise:/root/.flowise
+            - .flowise:/root/.flowise
         entrypoint: /bin/sh -c "sleep 3; flowise start"
 
+        logging:
+          driver: "json-file"
+          options:
+            max-file: "10"
+            max-size: "2m"
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-    logging:
-      driver: "json-file"
-      options:
-        max-file: "10"
-        max-size: "2m"
 
 networks:
   LAN:
@@ -94,5 +42,5 @@ volumes:
     driver_opts:
       type: nfs
       o: addr=192.168.1.247,rw,nolock,noatime,vers=4
-      device: ":/volume1/Network Drive/docker_config/shinobi/ShinobiSQL"
+      device: ":/volume1/Network Drive/docker_data/flowise/.flowise"
     

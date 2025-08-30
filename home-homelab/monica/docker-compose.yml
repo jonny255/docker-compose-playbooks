@@ -14,44 +14,44 @@ services:
     ports:
       - '${APP_PORT:-80}:80'
       - '${VITE_PORT:-5173}:${VITE_PORT:-5173}'
-    environment:
-      WWWUSER: '${WWWUSER}'
-      LARAVEL_SAIL: 1
-      XDEBUG_MODE: '${SAIL_XDEBUG_MODE:-off}'
-      XDEBUG_CONFIG: '${SAIL_XDEBUG_CONFIG:-client_host=host.docker.internal}'
-      IGNITION_LOCAL_SITES_PATH: '${PWD}'
+    env_file:
+      - .env
     volumes:
       - '.:/var/www/html'
     networks:
-      - sail
+      - LAN
     depends_on:
       - mariadb
       - redis
       - memcached
       - meilisearch
       - mailpit
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "10"
+        max-size: "2m"
+
+
   laravel.queue:
     <<: *app
     command: 'php artisan queue:work --sleep=10 --timeout=0 --tries=3 --queue=high,default,low'
   laravel.cron:
     <<: *app
     command: 'php artisan schedule:run'
+
+
   mariadb:
     image: 'mariadb:10'
     ports:
       - '${FORWARD_DB_PORT:-3306}:3306'
-    environment:
-      MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
-      MYSQL_ROOT_HOST: '%'
-      MYSQL_DATABASE: '${DB_DATABASE}'
-      MYSQL_USER: '${DB_USERNAME}'
-      MYSQL_PASSWORD: '${DB_PASSWORD}'
-      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    env_file:
+      - .env
     volumes:
       - 'sail-mariadb:/var/lib/mysql'
       - './vendor/laravel/sail/database/mysql/create-testing-database.sh:/docker-entrypoint-initdb.d/10-create-testing-database.sh'
     networks:
-      - sail
+      - LAN
     healthcheck:
       test:
         - CMD
@@ -60,6 +60,18 @@ services:
         - '-p${DB_PASSWORD}'
       retries: 3
       timeout: 5s
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "10"
+        max-size: "2m"
+
+
+
+
+
+
+
   redis:
     image: 'redis:alpine'
     ports:
@@ -67,7 +79,7 @@ services:
     volumes:
       - 'sail-redis:/data'
     networks:
-      - sail
+      - LAN
     healthcheck:
       test:
         - CMD
@@ -75,12 +87,32 @@ services:
         - ping
       retries: 3
       timeout: 5s
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "10"
+        max-size: "2m"
+
+
+
+
+
+
+
   memcached:
     image: 'memcached:alpine'
     ports:
       - '${FORWARD_MEMCACHED_PORT:-11211}:11211'
     networks:
-      - sail
+      - LAN
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "10"
+        max-size: "2m"
+
+
+
   meilisearch:
     image: 'getmeili/meilisearch:latest'
     ports:
@@ -90,7 +122,7 @@ services:
     volumes:
       - 'sail-meilisearch:/meili_data'
     networks:
-      - sail
+      - LAN
     healthcheck:
       test:
         - CMD
@@ -100,51 +132,55 @@ services:
         - 'http://localhost:7700/health'
       retries: 3
       timeout: 5s
+
   mailpit:
     image: 'axllent/mailpit:latest'
     ports:
       - '${FORWARD_MAILPIT_PORT:-1025}:1025'
       - '${FORWARD_MAILPIT_DASHBOARD_PORT:-8025}:8025'
     networks:
-      - sail
-networks:
-  sail:
-    driver: bridge
-volumes:
-  sail-mariadb:
-    driver: local
-  sail-redis:
-    driver: local
-  sail-meilisearch:
-    driver: local
-
-
-
-
-
-
-
-
-
-
-
-
+      - LAN
     logging:
       driver: "json-file"
       options:
         max-file: "10"
         max-size: "2m"
 
+
+
+
+
+
+
+
 networks:
   LAN:
     external:
       true
 
+
+
+
+
 volumes:
-  ShinobiSQL:
+  mariadb:
     driver: local
     driver_opts:
       type: nfs
       o: addr=192.168.1.247,rw,nolock,noatime,vers=4
-      device: ":/volume1/Network Drive/docker_config/shinobi/ShinobiSQL"
-    
+      device: ":/volume1/Network Drive/docker_config/monica/mariadb"
+  redis:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=192.168.1.247,rw,nolock,noatime,vers=4
+      device: ":/volume1/Network Drive/docker_config/monica/redis"
+  meilisearch:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=192.168.1.247,rw,nolock,noatime,vers=4
+      device: ":/volume1/Network Drive/docker_config/monica/meilisearch"
+
+
+
