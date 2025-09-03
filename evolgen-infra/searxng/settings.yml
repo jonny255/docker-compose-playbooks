@@ -1,0 +1,77 @@
+# 1) Top‑level active backends (strings only)
+engines:
+  - duckduckgo
+  - brave
+  - bing
+  - startpage
+  - google
+
+search:
+  # 2) Under `search`: same list for order
+  engines:
+    - duckduckgo
+    - brave
+    - bing
+    - startpage
+    - google
+
+  # 3) Under `search`: detailed per‑engine configs
+  engines_settings:
+    duckduckgo:
+      name: DuckDuckGo
+      engine: duckduckgo
+      shortcut: ddg
+      disabled: false
+
+    brave:
+      name: Brave Search
+      engine: brave
+      shortcut: br
+      disabled: false
+
+    bing:
+      name: Bing
+      engine: bing
+      shortcut: b
+      disabled: false
+
+    startpage:
+      name: StartPage
+      engine: startpage
+      shortcut: sp
+      disabled: false
+
+    google:
+      name: Google
+      engine: google
+      shortcut: g
+      disabled: false
+
+  # 4) Any other `search:` options
+  formats:
+    - html
+    - json
+
+
+categories:
+  general:
+    enabled: true
+
+  # disable all others
+  images:
+    enabled: false
+  videos:
+    enabled: false
+  music:
+    enabled: false
+  science:
+    enabled: false
+  files:
+    enabled: false
+  maps:
+    enabled: false
+  news:
+    enabled: false
+  all:
+    enabled: false
+
