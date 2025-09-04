@@ -1,0 +1,45 @@
+# https://github.com/Graylog2/graylog-docker/tree/6.3/docker/datanode
+
+# Graylog is a centralized logging solution that enables aggregating and searching through logs.
+# The Data Node is a management component for OpenSearch to configure and adapt it for use with Graylog.
+# It ensures that the data layer for Graylog is properly secured with certificates, provides cluster
+# membership handling and adoption of new nodes for use with Graylog. The Data Node will make sure the
+# appropriate OpenSearch version and necessary extensions, are in place so that Graylog can function as intended.
+
+
+
+---
+services:
+  graylog-datanode:
+#    hostname: "datanode"
+    image: "graylog/graylog-datanode:5.2"
+    depends_on:
+      - "mongodb"
+    environment:
+      GRAYLOG_DATANODE_PASSWORD_SECRET: "<password-secret>"
+      GRAYLOG_DATANODE_ROOT_USERNAME: "<admin user name>"
+      GRAYLOG_DATANODE_MONGODB_URI: "mongodb://mongodb:27017/graylog"
+    ulimits:
+      memlock:
+        hard: -1
+        soft: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    ports:
+      - "127.0.0.1:8999:8999"  # Graylog Data Node REST API
+      - "127.0.0.1:9200:9200"  # OpenSearch REST API
+      - "127.0.0.1:9300:9300"  # OpenSearch Transport API
+    volumes:
+      - "graylog-datanode:/var/lib/graylog-datanode"
+
+  mongodb:
+    image: "mongo:5.0"
+    ports:
+      - "127.0.0.1:27017:27017"
+    volumes:
+      - "mongodb:/data/db"
+
+volumes:
+  graylog-datanode:
+  mongodb:

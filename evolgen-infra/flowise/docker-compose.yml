@@ -1,0 +1,46 @@
+
+
+services:
+    flowise:
+        image: flowiseai/flowise:latest
+        restart: unless-stopped
+        env_file:
+          - .env
+#            # LOGGING
+#            - DEBUG=${DEBUG}
+#            - LOG_PATH=${LOG_PATH}
+#            - LOG_LEVEL=${LOG_LEVEL}
+        ports:
+            - '${PORT}:${PORT}'
+        healthcheck:
+            test: ['CMD', 'curl', '-f', 'http://localhost:${PORT}/api/v1/ping']
+            interval: 10s
+            timeout: 5s
+            retries: 5
+            start_period: 30s
+        volumes:
+            - .flowise:/root/.flowise
+        entrypoint: /bin/sh -c "sleep 3; flowise start"
+
+        logging:
+          driver: "json-file"
+          options:
+            max-file: "10"
+            max-size: "2m"
+
+
+
+
+networks:
+  LAN:
+    external:
+      true
+
+volumes:
+  ShinobiSQL:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=192.168.1.247,rw,nolock,noatime,vers=4
+      device: ":/volume1/Network Drive/docker_data/flowise/.flowise"
+    

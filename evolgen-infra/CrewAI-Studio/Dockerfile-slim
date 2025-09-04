@@ -1,5 +1,6 @@
-# Dockerfile for my python-ml-base-slim
-FROM python:3.11
+# Dockerfile
+FROM python:3.11-slim AS base
+WORKDIR /app
 
 # System deps (minimal)
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -17,3 +18,13 @@ RUN pip install --no-cache-dir \
         langchain-ollama \
         streamlit==1.48.1 \
         requests
+
+# Copy app source
+COPY . .
+
+# Expose port for Streamlit
+EXPOSE 8501
+
+# Run app
+CMD ["streamlit", "run", "./app/app.py", "--server.headless", "true"]
+

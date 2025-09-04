@@ -1,0 +1,45 @@
+# URL: https://gitlab.com/Shinobi-Systems/ShinobiDocker
+
+services:
+  shinobi-sql:
+    image: mysql:5.7
+    env_file:
+      - .env
+    volumes:
+      - ShinobiSQL:/var/lib/mysql
+      - mysql-init:/docker-entrypoint-initdb.d
+    restart: unless-stopped
+    networks:
+      LAN:
+        ipv4_address: 192.168.1.555
+    tty: true
+    stdin_open: true
+
+
+
+
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "10"
+        max-size: "2m"
+
+networks:
+  LAN:
+    external:
+      true
+
+volumes:
+  ShinobiSQL:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=192.168.1.247,rw,nolock,noatime,vers=4
+      device: ":/volume1/Network Drive/docker_config/shinobi/ShinobiSQL"
+    
+  mysql-init:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=192.168.1.247,rw,nolock,noatime,vers=4
+      device: ":/volume1/Network Drive/docker_config/shinobi/mysql-init"

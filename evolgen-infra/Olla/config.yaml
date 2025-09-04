@@ -1,4 +1,5 @@
 # Refer to https://thushan.github.io/olla/concepts/load-balancing/ for available options and best strategies.
+# https://thushan.github.io/olla/compare/gpustack/
 
 # Configuration Structure:
     # server:         # HTTP server configuration
