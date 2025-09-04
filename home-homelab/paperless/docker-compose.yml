@@ -2,33 +2,17 @@ services:
   paperless-ai:
     image: clusterzx/paperless-ai
     container_name: paperless-ai
-<<<<<<< HEAD
-=======
-    network_mode:
-      LAN:
-        ipv4_address: 192.168.1.153
->>>>>>> 031b588 (From docker vm, after SSD restore.)
     restart: unless-stopped
     cap_drop:
       - ALL
     security_opt:
       - no-new-privileges=true
-<<<<<<< HEAD
     env_file:
       - .env
-=======
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - PAPERLESS_AI_PORT=${PAPERLESS_AI_PORT:-3000}
-      - RAG_SERVICE_URL=http://localhost:8000
-      - RAG_SERVICE_ENABLED=true
->>>>>>> 031b588 (From docker vm, after SSD restore.)
     ports:
       - "3000:${PAPERLESS_AI_PORT:-3000}"
     volumes:
       - paperless-ai_data:/data
-<<<<<<< HEAD
     networks:
       LAN:
         ipv4_address: 192.168.1.153
@@ -37,14 +21,11 @@ services:
 
 
 
-=======
->>>>>>> 031b588 (From docker vm, after SSD restore.)
   broker:
     image: docker.io/library/redis:8
     restart: unless-stopped
     volumes:
       - redisdata:/data
-<<<<<<< HEAD
     networks:
       LAN:
         ipv4_address: 192.168.1.157
@@ -70,25 +51,6 @@ services:
 
 
 
-=======
-    network_mode:
-      LAN:
-        ipv4_address: 192.168.1.157
-
-  db:
-    image: docker.io/library/postgres:17
-    restart: unless-stopped
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-    environment:
-      POSTGRES_DB: paperless
-      POSTGRES_USER: paperless
-      POSTGRES_PASSWORD: paperless
-    network_mode:
-      LAN:
-        ipv4_address: 192.168.1.158
-
->>>>>>> 031b588 (From docker vm, after SSD restore.)
   webserver:
     image: ghcr.io/paperless-ngx/paperless-ngx:latest
     restart: unless-stopped
@@ -102,7 +64,6 @@ services:
       - media:/usr/src/paperless/media
       - ./export:/usr/src/paperless/export
       - ./consume:/usr/src/paperless/consume
-<<<<<<< HEAD
     env_file:
 #      - docker-compose.env
       - .env
@@ -126,16 +87,6 @@ networks:
     external:
       true
 
-=======
-    env_file: docker-compose.env
-    environment:
-      PAPERLESS_REDIS: redis://broker:6379
-      PAPERLESS_DBHOST: db
-    network_mode:
-      LAN:
-        ipv4_address: 192.168.1.154
-
->>>>>>> 031b588 (From docker vm, after SSD restore.)
 volumes:
   paperless-ai_data:
     driver: local
@@ -144,7 +95,6 @@ volumes:
       o: addr=192.168.1.247,rw,nolock,noatime,vers=4
       device: ":/volume1/Network Drive/docker_data/paperless-ai_data"
 
-<<<<<<< HEAD
   redisdata:
     driver: local
     driver_opts:
@@ -159,8 +109,6 @@ volumes:
       o: addr=192.168.1.247,rw,nolock,noatime,vers=4
       device: ":/volume1/Network Drive/docker_data/pgdata"
 
-=======
->>>>>>> 031b588 (From docker vm, after SSD restore.)
   data:
     driver: local
     driver_opts:
@@ -173,13 +121,4 @@ volumes:
     driver_opts:
       type: nfs
       o: addr=192.168.1.247,rw,nolock,noatime,vers=4
-<<<<<<< HEAD
       device: ":/volume1/Network Drive/docker_data/media"
-=======
-      device: ":/volume1/Network Drive/docker_data/media"
-
-  pgdata:
-
-  redisdata:
-
->>>>>>> 031b588 (From docker vm, after SSD restore.)
