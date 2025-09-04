@@ -21,6 +21,7 @@ networks:
   lan:
     external: true
     name: LAN
+<<<<<<< HEAD
 
 
 
@@ -50,3 +51,5 @@ volumes:
       o: addr=192.168.1.247,rw,nolock,noatime,vers=4
       device: ":/volume1/Network Drive/docker_config/shinobi/ShinobiSQL"
     
+=======
+>>>>>>> 031b588 (From docker vm, after SSD restore.)
