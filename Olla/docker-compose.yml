@@ -1,0 +1,21 @@
+services:
+  olla:
+    image: ghcr.io/thushan/olla:latest
+    container_name: olla
+#    env_file:
+#      - .env
+    ports:
+      - "40114:40114"   # more for personal reference than it being needed since it has its own dedicated IP.
+    restart: unless-stopped
+    networks:
+      LAN:
+        ipv4_address: 192.168.1.49
+    environment:
+        - CONFIG=config.yaml
+    # guarantee logs are visible
+    tty: true
+    stdin_open: true
+
+networks:
+  LAN:
+    external: true

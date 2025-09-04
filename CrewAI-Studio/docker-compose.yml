@@ -1,0 +1,22 @@
+services:
+  crewai-studio:
+    image: my-python-ml-base:3.11
+    container_name: crewai-studio
+    build: .   # make sure it rebuilds with the new CMD
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+    ports:
+      - "8501:8501"   # expose Streamlit web UI
+    restart: unless-stopped
+    networks:
+      LAN:
+        ipv4_address: 192.168.1.34
+    # guarantee logs are visible
+    tty: true
+    stdin_open: true
+
+networks:
+  LAN:
+    external: true
