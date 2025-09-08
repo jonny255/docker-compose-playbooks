@@ -3,9 +3,12 @@
 	-	Sonarr
 	-	Radarr
 	-	Readarr
+	-	Tdarr			Transcoding to H.265 to reduce video sizes
+	-	Jellyfin		Netflix, Hulu, etc
+	-	Youtube Downloader			Self explanitory
+
+
 	-	gazebo: OS project for simulating robots, offering robust phsyics and render...
 	-	monica: the Personal Relationship Manager
 	-	neurodebian: provides neuroscience research software for Debian, Ubuntu and other deriv...
 	-	rocket.chat: the complete OS chat solution
-	-	tdarr
-	-	Jellyfin
