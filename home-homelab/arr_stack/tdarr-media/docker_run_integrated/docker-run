@@ -1,0 +1,30 @@
+docker run -ti \
+    -v /docker/tdarr/server:/app/server \
+    -v /docker/tdarr/configs:/app/configs \
+    -v /docker/tdarr/logs:/app/logs \
+    -v /media:/media \
+    -v /transcode_cache:/temp \
+    -e "serverIP=0.0.0.0" \
+    -e "serverPort=8266" \
+    -e "webUIPort=8265" \
+    -e "internalNode=true" \
+    -e "inContainer=true" \
+    -e "ffmpegVersion=7" \
+    -e "nodeName=MyInternalNode" \
+    -e "auth=false" \
+    -e "openBrowser=true" \
+    -e "maxLogSizeMB=10" \
+    -e "cronPluginUpdate=" \
+    --network bridge \
+    -p 8265:8265 \
+    -p 8266:8266 \
+#    -e "TZ=Europe/London" \
+    -e PUID=1000 \
+    -e PGID=1000 \
+    -e "NVIDIA_DRIVER_CAPABILITIES=all" \
+    -e "NVIDIA_VISIBLE_DEVICES=all" \
+    --gpus=all \
+    --device=/dev/dri:/dev/dri \
+    --log-opt max-size=10m \
+    --log-opt max-file=5 \
+    ghcr.io/haveagitgat/tdarr

@@ -4,7 +4,9 @@ services:
     container_name: tdarr
     image: ghcr.io/haveagitgat/tdarr:latest
     restart: unless-stopped
-    network_mode: bridge
+    networks:
+      LAN:
+        ipv4_address: 192.168.1.65
     ports:
       - 8265:8265 # webUI port
       - 8266:8266 # server port
@@ -52,3 +54,27 @@ services:
           - driver: nvidia
             count: all
             capabilities: [gpu]
+
+
+
+
+    volumes:
+      - redisdata:/data
+
+
+volumes:
+  redisdata:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=192.168.1.247,rw,nolock,noatime,vers=4
+      device: ":/volume1/Network Drive/docker_data/redisdata"
+
+
+
+
+
+networks:
+  LAN:
+    external:
+      true

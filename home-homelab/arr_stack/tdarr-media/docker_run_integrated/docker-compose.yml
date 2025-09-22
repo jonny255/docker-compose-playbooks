@@ -1,0 +1,67 @@
+
+services:
+  tdarr:
+    container_name: tdarr
+    image: ghcr.io/haveagitgat/tdarr:latest
+    restart: unless-stopped
+    networks:
+      LAN:
+        ipv4_address: 192.168.1.65
+    ports:
+      - 8265:8265 # webUI port
+      - 8266:8266 # server port
+    env_file:
+      - .env
+    volumes:
+      - server:/app/server
+      - configs:/app/configs
+      - logs:/app/logs
+      - media:/media
+      - transcode_cache:/temp
+
+
+
+
+
+
+networks:
+  LAN:
+    external:
+      true
+
+
+volumes:
+  server:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=192.168.1.247,rw,nolock,noatime,vers=4
+      device: ":/volume1/Network Drive/docker_data/server"
+
+  configs:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=192.168.1.247,rw,nolock,noatime,vers=4
+      device: ":/volume1/Network Drive/docker_data/configs"
+
+  logs:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=192.168.1.247,rw,nolock,noatime,vers=4
+      device: ":/volume1/Network Drive/docker_data/logs"
+
+  media:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=192.168.1.247,rw,nolock,noatime,vers=4
+      device: ":/volume1/Network Drive/docker_data/media"
+
+  transcode_cache:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=192.168.1.247,rw,nolock,noatime,vers=4
+      device: ":/volume1/Network Drive/docker_data/transcode_cache"
