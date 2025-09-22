@@ -1,6 +1,3 @@
-# https://thushan.github.io/olla/compare/gpustack/
-
-
 services:
   gpustack:
     image: gpustack/gpustack

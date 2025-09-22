@@ -39,6 +39,7 @@ services:
         max-size: "2m"
 
 
+# For networking, you'll want to reserve of block of 16 IP addresses, (/28 or .240)
 networks:
   LAN:
     external:
