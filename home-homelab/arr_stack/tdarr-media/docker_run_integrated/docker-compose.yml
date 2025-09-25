@@ -1,4 +1,3 @@
-
 services:
   tdarr:
     container_name: tdarr
@@ -10,58 +9,60 @@ services:
     ports:
       - 8265:8265 # webUI port
       - 8266:8266 # server port
-    env_file:
-      - .env
+#    env_file:
+#      - .env
     volumes:
-      - server:/app/server
       - configs:/app/configs
+      - server:/app/server
       - logs:/app/logs
       - media:/media
       - transcode_cache:/temp
-
-
-
-
-
 
 networks:
   LAN:
     external:
       true
 
-
 volumes:
-  server:
-    driver: local
-    driver_opts:
-      type: nfs
-      o: addr=192.168.1.247,rw,nolock,noatime,vers=4
-      device: ":/volume1/Network Drive/docker_data/server"
-
   configs:
     driver: local
     driver_opts:
       type: nfs
-      o: addr=192.168.1.247,rw,nolock,noatime,vers=4
-      device: ":/volume1/Network Drive/docker_data/configs"
+      o: addr=192.168.1.247,rw,nolock,vers=4
+      device: ":/volume1/Network Drive/docker_configs/tdarr-media/configs"
+
+  server:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=192.168.1.247,rw,noatime,rsize=8192,wsize=8192,tcp,timeo=14,nfsvers=4
+      device: ":/volume1/Network Drive/docker_data/tdarr-media/server"
 
   logs:
     driver: local
     driver_opts:
       type: nfs
-      o: addr=192.168.1.247,rw,nolock,noatime,vers=4
-      device: ":/volume1/Network Drive/docker_data/logs"
+      o: addr=192.168.1.247,rw,noatime,rsize=8192,wsize=8192,tcp,timeo=14,nfsvers=4
+      device: ":/volume1/Network Drive/docker_data/tdarr-media/logs"
 
   media:
     driver: local
     driver_opts:
       type: nfs
-      o: addr=192.168.1.247,rw,nolock,noatime,vers=4
-      device: ":/volume1/Network Drive/docker_data/media"
+      o: addr=192.168.1.247,rw,noatime,rsize=8192,wsize=8192,tcp,timeo=14,nfsvers=4
+      device: ":/volume1/Network Drive/docker_data/tdarr-media/media"
 
   transcode_cache:
     driver: local
     driver_opts:
       type: nfs
-      o: addr=192.168.1.247,rw,nolock,noatime,vers=4
-      device: ":/volume1/Network Drive/docker_data/transcode_cache"
+      o: addr=192.168.1.247,rw,noatime,rsize=8192,wsize=8192,tcp,timeo=14,nfsvers=4
+      device: ":/volume1/Network Drive/docker_data/tdarr-media/transcode_cache"
+
+
+
+
+
+
+
+#      o: addr=192.168.1.247,rw,nolock,vers=4
