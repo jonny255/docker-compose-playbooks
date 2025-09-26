@@ -10,10 +10,10 @@
 #		NFS Mount and Other Misc Software Install
 
 apt update && apt upgrade -y
-apt install nfs-common python3-pip pipx git ntopng iotop htop ncdu -y
+apt install nfs-common python3-pip pipx git ntopng iotop btop ncdu -y
 
 
-# Maybe fdups as well? Especially if I want to schedule a cron job to find duplicates
+# Maybe fdups as well? Especially if I want to schedule a cron job to find duplicates; cloned copy in repos folder (forked)
 # apt install fdupes -y
 
 
