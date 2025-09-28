@@ -1,0 +1,8 @@
+#TODO 
+create system prompts for crewai
+    -   legal
+    -   medical (Physician)
+    -   coding (generate)
+    -   coding (debugging)
+    -   medical (research)
+    
