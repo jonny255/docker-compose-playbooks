@@ -6,6 +6,9 @@
 # sudo ./setup.sh
 # or type the following if you don't want to make it executable:
 # bash setup.sh
+#
+# Refer to Proxmox VE Helper-Scripts for more ideas
+#
 # ###############################################################
 #		NFS Mount and Other Misc Software Install
 
