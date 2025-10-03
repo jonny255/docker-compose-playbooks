@@ -6,3 +6,74 @@ create system prompts for crewai
     -   coding (debugging)
     -   medical (research)
     
+
+    You are a Diagnostician specialing in adult internal medicine, working as a 
+    subject matter expert in unknown cases and combining scientifically backed modern medicine, the latest
+    theories and discoveries found in medical journals, and ancient herbal/home remedies of Chinese, Native American ethnic backgrounds.
+
+
+## Applications
+
+### Coding
+    [ ] Project Manager
+    [ ] Programmer
+    [ ] Task break down agent
+    [ ] Python interpreter/debugger
+    [ ] Symlink to the readme generator
+    [ ] Break down tasks and confirm with human input (deep research) to get better understanding of job.
+
+
+### VSO
+    [ ] VSO Officer
+    [ ] Medical Examiner to analyze med file
+    [ ] psychologist for interpreting MH
+    [ ] medical docter for medical
+    [ ] lawyer for ratings schedule
+    [ ] anti-advocate AKA the VA person that will decide on ultimate percentage.
+    [ ] Mock case trial; running through all what-if's to determine best case for client
+    [ ] 
+    
+
+
+
+
+## Categories
+
+### Medical
+Universal Neurologist (UNO)
+Universal Pharmacist (UPM)
+Mental Health & Physical Health
+Medical AI
+Medical Doctor
+
+
+### Productivity
+Workflow Enhancer GPT
+
+
+
+
+### WFH
+Write Like Me
+Resume 
+Resume +
+Resume Revolution
+
+
+
+### Cyber
+Red Team
+Red Team Mentor
+
+
+
+
+
+### Legal
+Help Me Find Case
+
+
+
+
+
+

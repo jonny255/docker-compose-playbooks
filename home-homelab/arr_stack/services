@@ -8,8 +8,18 @@
 	[ ] Youtube Downloader			Self explanitory
 	[ ] Prowlarr		Indexers
 
+-	Sonarr
+-	Radarr
+-	Readarr
+-	Tdarr			Transcoding to H.265 to reduce video sizes
+-	Jellyfin		Netflix, Hulu, etc
+-	Youtube Downloader			Self explanitory
 
-	-	gazebo: OS project for simulating robots, offering robust physics and render...
-	-	monica: the Personal Relationship Manager
-	-	neurodebian: provides neuroscience research software for Debian, Ubuntu and other deriv...
-	-	rocket.chat: the complete OS chat solution
+
+-	gazebo: OS project for simulating robots, offering robust physics and render...
+	-	Washing Dishes
+	-	Acrobatics
+		-	Data Sources: Youtube footage of gymnastics; insecam people walking; olympics tennis; Wipe Out TV show; wrestling/martial arts (not UFC); BJJ; Yoga
+-	monica: the Personal Relationship Manager
+-	neurodebian: provides neuroscience research software for Debian, Ubuntu and other deriv...
+-	rocket.chat: the complete OS chat solution
