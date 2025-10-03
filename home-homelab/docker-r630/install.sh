@@ -7,6 +7,9 @@
 # or type the following if you don't want to make it executable:
 # bash setup.sh
 #
+# TODO
+# [ ] Continue working on this script
+#
 # Refer to Proxmox VE Helper-Scripts for more ideas
 #
 # ###############################################################
