@@ -9,3 +9,10 @@ A personal repo of all the various custom-configured homelab services that inclu
 - There will be the templates for all of the different honeypots, as well as a set of networks, and the AI will generate the random networks, honeypots to use, all other necessary information like IP address, MACs, user/pass creds, ports, services, etc.
 [ ] Build a docker-compose template.
 [ ] Fill in the template everything from security hardening, healthchecks, etc
+[ ] Setup script for
+    [ ] vast.ai
+    [ ] gothem on R610
+    [ ] financial related
+        [ ] fossbilling: Hosting and billing automation. Integrates with WHM, CWP, cPanel and HestiaCP. Full API and easily extensible. (my own vps hosting site)
+        [ ] lago: Metering and usage-based billing. (between services like vast vs actual spending expenses)
+        [ ] 
