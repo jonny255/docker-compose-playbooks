@@ -8,16 +8,14 @@ services:
   actual-development:
     build: .
     image: actual-development
-    environment:
-      - HTTPS
+    restart: 'always'
+    networks:
+      LAN:
+        ipv4_address: 192.168.1.177
     ports:
       - 3001:3001
     volumes:
       - '.:/app'
-    restart: 'no'
-    networks:
-      LAN:
-        ipv4_address: 192.168.1.177
 
 networks:
   LAN:

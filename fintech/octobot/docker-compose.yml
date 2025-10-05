@@ -6,32 +6,28 @@ services:
     container_name: octobot
 #    env_file:
 #      - .env
-    ports:
-      - "80:5001"   # more for personal reference than it being needed since it has its own dedicated IP.
-    restart: unless-stopped
     networks:
       LAN:
         ipv4_address: 192.168.1.195
-#    environment:
-#        - CONFIG=config.yaml
-    # guarantee logs are visible
-    tty: true
-    stdin_open: true
+    ports:
+      - 80:5001   # more for personal reference than it being needed since it has its own dedicated IP.
     volumes:
       - user:/octobot/user 
       - tentacles:octobot/tentacles
       - logs:octobot/logs
-
-
-
-
-
+    # guarantee logs are visible
+    tty: true
+    stdin_open: true
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "10"
+        max-size: "2m"
 
 
 networks:
   LAN:
     external: true
-
 
 volumes:
   user:
@@ -41,14 +37,12 @@ volumes:
       o: addr=192.168.1.247,rw,nolock,vers=4
       device: ":/volume1/Network Drive/docker_data/octobot_user"
 
-
   tentacles:
     driver: local
     driver_opts:
       type: nfs
       o: addr=192.168.1.247,rw,nolock,vers=4
       device: ":/volume1/Network Drive/docker_data/octobot_tentacles"
-
 
   logs:
     driver: local
