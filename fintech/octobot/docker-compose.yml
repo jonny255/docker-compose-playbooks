@@ -6,8 +6,8 @@ services:
     container_name: octobot
 #    env_file:
 #      - .env
-    ports:
-      - "80:5001"   # more for personal reference than it being needed since it has its own dedicated IP.
+#    ports:
+#      - "80:5001"   # more for personal reference than it being needed since it has its own dedicated IP.
     restart: unless-stopped
     networks:
       LAN:
@@ -19,8 +19,9 @@ services:
     stdin_open: true
     volumes:
       - user:/octobot/user 
-      - tentacles:octobot/tentacles
-      - logs:octobot/logs
+      - tentacles:/octobot/tentacles
+      - logs:/octobot/logs
+      - backtesting:/octobot/backtesting
 
 
 
@@ -39,7 +40,7 @@ volumes:
     driver_opts:
       type: nfs
       o: addr=192.168.1.247,rw,nolock,vers=4
-      device: ":/volume1/Network Drive/docker_data/octobot_user"
+      device: ":/volume1/Network Drive/docker_data/octobot/octobot_user"
 
 
   tentacles:
@@ -47,7 +48,7 @@ volumes:
     driver_opts:
       type: nfs
       o: addr=192.168.1.247,rw,nolock,vers=4
-      device: ":/volume1/Network Drive/docker_data/octobot_tentacles"
+      device: ":/volume1/Network Drive/docker_data/octobot/octobot_tentacles"
 
 
   logs:
@@ -55,7 +56,15 @@ volumes:
     driver_opts:
       type: nfs
       o: addr=192.168.1.247,rw,nolock,vers=4
-      device: ":/volume1/Network Drive/docker_data/octobot_logs"
+      device: ":/volume1/Network Drive/docker_data/octobot/octobot_logs"
+
+
+  backtesting:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=192.168.1.247,rw,nolock,vers=4
+      device: ":/volume1/Network Drive/docker_data/octobot/octobot_backtesting"
 
 
 
