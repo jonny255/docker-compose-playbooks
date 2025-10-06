@@ -23,10 +23,6 @@ apt install nfs-common python3-pip pipx git ntopng iotop btop ncdu -y
 # apt install fdupes -y
 
 
-# 192.168.1.119:/mnt/HDD        /mnt/TrueNAS    nfs     auto,nofail,noatime,nolock,intr,tcp,actimeo=1800        0       0
-
-
-
 
 ### For Synology
 
@@ -47,13 +43,7 @@ mount -a
 
 
 
-##### Alternatively, try this:
-# echo "192.168.1.119:/mnt/HDD /mnt/TrueNAS nfs auto,nofail,noatime,nolock,intr,tcp,actimeo=1800 0 0" >> /etc/fstab
-
 # ###############################################################
-
-#		nvitop Install
-#pipx run nvitop
 
 # ###############################################################
 
@@ -152,10 +142,7 @@ docker run --link mongo --link elasticsearch \    
 #		EXPORTING OPENAI API DETAILS
 
 # Find the .bashrc, .bash_profile, or .zshrc in your home directory & add following lines:
-export OPENAI_API_KEY=sk-111111111111111111111111111111111111111111111111
 export OPENAI_BASE=http://192.168.1.110:5000/v1
-export OPENAI_BASE_URL=http://192.168.1.110:5000/v1
-
 
 
 
