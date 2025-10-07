@@ -14,6 +14,31 @@ services:
     tty: true
     stdin_open: true
 
+
+       - ${PORT:-80}:${PORT:-5001}
+    restart: always
+  
+  watchtower:
+    image: containrrr/watchtower
+    restart: always
+    command: --cleanup --include-restarting
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 networks:
   LAN:
     external: true
