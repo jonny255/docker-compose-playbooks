@@ -104,16 +104,31 @@ sleep 2
 
 
 # ###############################################################
-#		configuring LACP
+#		Creating and configuring Cron jobs
+
+  TODO
+  [ ] daily script to do routine cleaning/purging of os
+  [ ] weekly script to go do the major and aggressive cleanups
+      - [ ] git repos & branches
+      - [ ] docker layers
+  [ ] quarterly teardown of all services and servers
 
 
+# Once a week, every Sunday 
+  0 0 * * 0
 
 
 
 
 
 # ###############################################################
-#		Squid Docker
+#   Creating backup cron jobs
+  [ ] Proxmox
+  [ ] docker service?
+  [ ] exporting configs from docker services/containers
+  
+  * incrementals daily
+  * weekly full backups
 
 
 
@@ -133,16 +148,6 @@ docker run --link mongo --link elasticsearch \    
 #		Mount local drive at boot time (This is Ex for GPGPU-1)
 
 
-
-
-
-
-
-# ###############################################################
-#		EXPORTING OPENAI API DETAILS
-
-# Find the .bashrc, .bash_profile, or .zshrc in your home directory & add following lines:
-export OPENAI_BASE=http://192.168.1.110:5000/v1
 
 
 
